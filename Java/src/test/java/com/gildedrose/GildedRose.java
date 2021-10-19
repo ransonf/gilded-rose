@@ -28,12 +28,15 @@ public class GildedRose {
             if( item.getName().contains( "Backstage passes" ) ){
                 if( item.getSellIn() > 10 ){
                     ajoutQuality( item, 1 );
+                    diminueSellIn( item, 1 );
                 }
                 if( item.getSellIn() <= 10 && item.getSellIn() > 5){
                     ajoutQuality( item, 2 );
+                    diminueSellIn( item, 1 );
                 }
                 if( item.getSellIn() <= 5){
                     ajoutQuality( item, 3 );
+                    diminueSellIn( item, 1 );
                 }
                 if( item.getSellIn() <= 0){
                     item.setQuality( 0 );
