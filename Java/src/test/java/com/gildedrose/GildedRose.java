@@ -3,7 +3,6 @@ package com.gildedrose;
 public class GildedRose {
 
     public Item[] items;
-    private int sellInDiminu;
 
     public Item[] getItems() {
         return items;
@@ -16,63 +15,64 @@ public class GildedRose {
     public static void main(String[] args) {
     }
 
-    public void updateQuality() {
+    // Complexity: 11
+    public void updateQuality() {//1
 
-        for( Item item : items ){
+        for( Item item : items ){//1
             // Si aged brie
-            if( item.getName().contains( "Aged Brie" ) ){
-                ajoutQuality( item, 1 );
+            if( item.getName().contains( "Aged Brie" ) ){//1
+                addQuality( item, 1 );
                 continue;
             }
             // Si Backstage passes
-            if( item.getName().contains( "Backstage passes" ) ){
-                if( item.getSellIn() > 10 ){
-                    ajoutQuality( item, 1 );
-                    diminueSellIn( item, 1 );
+            if( item.getName().contains( "Backstage passes" ) ){//1
+                if( item.getSellIn() > 10 ){//1
+                    addQuality( item, 1 );
+                    removeSellIn( item, 1 );
                 }
-                if( item.getSellIn() <= 10 && item.getSellIn() > 5){
-                    ajoutQuality( item, 2 );
-                    diminueSellIn( item, 1 );
+                if( item.getSellIn() <= 10 && item.getSellIn() > 5){// 1 + 1
+                    addQuality( item, 2 );
+                    removeSellIn( item, 1 );
                 }
-                if( item.getSellIn() <= 5){
-                    ajoutQuality( item, 3 );
-                    diminueSellIn( item, 1 );
+                if( item.getSellIn() <= 5){//1
+                    addQuality( item, 3 );
+                    removeSellIn( item, 1 );
                 }
-                if( item.getSellIn() <= 0){
+                if( item.getSellIn() <= 0){//1
                     item.setQuality( 0 );
                 }
                 continue;
             }
             // Si non sulfura (objet classique)
-            if( !item.getName().contains( "Sulfuras" ) ){
-                if( item.getSellIn() <= 0 ){
-                    diminueQuality( item, 1 * 2 );
-                    diminueSellIn( item, 1 * 2 );
+            if( !item.getName().contains( "Sulfuras" ) ){//1
+                if( item.getSellIn() <= 0 ){//1
+                    removeQuality( item, 1 * 2 );
+                    removeSellIn( item, 1 * 2 );
                 }else{
-                    diminueQuality( item, 1 );
-                    diminueSellIn( item, 1 );
+                    removeQuality( item, 1 );
+                    removeSellIn( item, 1 );
                 }
             }
         }
     }
 
-    public void ajoutQuality(Item i, int valeur ){
-        i.setQuality( i.getQuality() + valeur );
+    public void addQuality(Item item, int valeur ){
+        item.setQuality( item.getQuality() + valeur );
         // Valeur jamais plus de 50
-        if( i.getQuality() > 50 && !i.getName().equals( "Sulfuras" ) ){
-            i.setQuality( 50 );
+        if( item.getQuality() > 50 && !item.getName().equals( "Sulfuras" ) ){
+            item.setQuality( 50 );
         }
     }
 
-    public void diminueQuality(Item i, int valeur ){
-        i.setQuality( i.getQuality() - valeur );
+    public void removeQuality(Item item, int valeur ){
+        item.setQuality( item.getQuality() - valeur );
         // Valeur jamais negative
-        if( i.getQuality() < 0 ){
-            i.setQuality( 0 );
+        if( item.getQuality() < 0 ){
+            item.setQuality( 0 );
         }
     }
 
-    public void diminueSellIn( Item i, int valeur ){
-        i.setSellIn( i.getSellIn() - valeur );
+    public void removeSellIn(Item item, int valeur ){
+        item.setSellIn( item.getSellIn() - valeur );
     }
 }
